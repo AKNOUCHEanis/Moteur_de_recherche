@@ -31,7 +31,7 @@ class IndexSimpler:
         docs : TYPE liste de documents 
             DESCRIPTION.
 
-        Clacul l'index et l'index inverse, l'index tf-idf et l'index tf-idf inverse
+        Clacul l'index tf et l'index inverse tf
         -------
         None.
 
