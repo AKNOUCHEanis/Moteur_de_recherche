@@ -68,6 +68,12 @@ class Weighter1(Weighter):
             resultat[d]=doc
         return resultat 
     
+   
+class Weighter2(Weighter):
     
-        
+    def getWeightsForDoc(self, idDoc):
+    
+    def getWeightsForStem(self,stem):
+    
+    def getWeightsForQuery(self, query):
     
