@@ -12,6 +12,8 @@ import re
 
 class IndexSimpler:
     
+    
+    
     def normalisation(self,doc):
         """retourne un dictionnaire de mots et de leurs occurences"""
         words_doc1=doc.lower().split()
@@ -19,13 +21,11 @@ class IndexSimpler:
 
         for w in words_doc1:
             words_stem.append(porter.stem(w))
-    
-    
+            
         return dict(collections.Counter(words_stem))
     
     def indexation(self,docs):
         """
-
         Parameters 
         ----------
         docs : TYPE liste de documents 
@@ -55,6 +55,8 @@ class IndexSimpler:
    
         self.index=index
         self.index_inverse=index_inverse
+        self.docs=index.keys()
+        self.stems=index_inverse.keys()
         
     def  indexation_tf_idf(self,docs):
         index=self.index
@@ -80,19 +82,32 @@ class IndexSimpler:
         
     def getTfsForDoc(self,idoc):
         #idoc id document
-        return self.index_inverse[idoc]
+        try:
+            return  self.index[idoc]
+        except KeyError:
+            print("KeyError: Id du document érroné!")
+            
 
     def getTfIDFsForDoc(self,idoc):
         #idoc id document
-        return self.index_tf_idf[idoc]
+        try:
+            return self.index_tf_idf[idoc]
+        except KeyError:
+            print("KeyError: Id du document érroné!")
     
     def getTfsForStem(self,stem):
-        return self.index_inverse[stem]
-    
+        try:
+            return self.index_inverse[stem]
+        except KeyError:
+            print("KeyError: Stem introuvable!")
+            
     def getTfIDFsForStem(self,stem):
-        return self.index_tf_idf_inverse[stem]
+        try:
+            return self.index_tf_idf_inverse[stem]
+        except KeyError:
+            print("KeyError: Stem introuvable!")
     
-    def getStrDoc(self,idoc):
+    def getStrDoc(self,idoc): # Il faut d'abord créer la collection avec buildCollectionSimple
         return self.collection[idoc]
     
     def buildDocCollectionSimple(self,chemin_doc): 
@@ -109,7 +124,6 @@ class IndexSimpler:
             value=""
             if ".I" in lignes[i] :
                 key=lignes[i][3:-1]
-                print(key)
                 i+=1
                 while ".T" not in lignes[i]:
                     i+=1
@@ -123,5 +137,27 @@ class IndexSimpler:
         
         file.close()
         self.collection= collection
+        
+    def getListDocs(self):
+        """retourne une liste de document texte"""
+        liste=[]
+        keys=self.collection.keys()
+        
+        for k in keys:
+            liste.append(self.collection[k])
+                
+        return liste
+        
+    def getIndex(self):
+        return self.index
+        
+    def getIndexInverse(self):
+        return self.index_inverse
+        
+    def getIndexTfIdf(self):
+        return self.index_tf_idf
+        
+    def getIndexTfIdfInverse(self):
+        return self.index_tf_idf_inverse
         
         
