@@ -33,10 +33,15 @@ indexSimpler.indexation(docs)
 
 #print(indexSimpler.getIndex())
 
-weighter3=Weighter.Weighter3(indexSimpler)
-#print(weighter1.getWeightsForDoc(1))
+weighter4=Weighter.Weighter4(indexSimpler)
+print(weighter4.getWeightsForDoc(200))
+print(indexSimpler.getTfsForDoc(200))
+
+
 #print(weighter1.getWeightsForStem("extract"))
-print(weighter3.getWeightsForQuery("je extract loss suis la comme toujours"))
+#print(weighter4.getWeightsForQuery("je extract loss suis la comme toujours"))
+
+
 
 
 
