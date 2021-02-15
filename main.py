@@ -31,15 +31,32 @@ indexSimpler.buildDocCollectionSimple("data\cacm\cacm.txt")
 docs=indexSimpler.getListDocs()
 indexSimpler.indexation(docs)
 
+weighter5=Weighter.Weighter5(indexSimpler)
+tf=indexSimpler.getTfsForDoc(0)
+#print("tf \n",tf)
+
+indexSimpler.indexation_tf_idf(docs)
+tfIdf=indexSimpler.getTfIDFsForDoc(0)
+#print("\n tfIdf \n",tfIdf)
+
 #print(indexSimpler.getIndex())
 
-weighter4=Weighter.Weighter4(indexSimpler)
-print(weighter4.getWeightsForDoc(200))
-print(indexSimpler.getTfsForDoc(200))
+
+#print("\n 3 \n",weighter5.getWeightsForStem("report-intern"))
+
+
+
+#print("tfidf \n",tfIdf,"\n tf \n",tf,"\n resultat \n")
+
+
+
+
+
+#print(indexSimpler.getTfsForDoc(200))
 
 
 #print(weighter1.getWeightsForStem("extract"))
-#print(weighter4.getWeightsForQuery("je extract loss suis la comme toujours"))
+print(weighter5.getWeightsForQuery("je extract science loss regim suis la comme toujours"))
 
 
 

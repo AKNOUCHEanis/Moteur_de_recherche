@@ -9,6 +9,7 @@ from utils.TextRepresenter import PorterStemmer
 import collections
 import numpy as np
 import re
+import copy
 
 class IndexSimpler:
     
@@ -59,8 +60,12 @@ class IndexSimpler:
         self.stems=index_inverse.keys()
         
     def  indexation_tf_idf(self,docs):
-        index=self.index
-        index_inverse=self.index_inverse
+        index={}
+        index=copy.deepcopy(self.index)
+        
+        index_inverse={}
+        index_inverse=copy.deepcopy(self.index_inverse)
+        
         N=len(docs)
         df={}
         idf={}
@@ -83,7 +88,7 @@ class IndexSimpler:
     def getTfsForDoc(self,idoc):
         #idoc id document
         try:
-            return  self.index[idoc]
+            return  copy.deepcopy(self.index[idoc])
         except KeyError:
             print("KeyError: Id du document érroné!")
             
@@ -91,19 +96,19 @@ class IndexSimpler:
     def getTfIDFsForDoc(self,idoc):
         #idoc id document
         try:
-            return self.index_tf_idf[idoc]
+            return copy.deepcopy(self.index_tf_idf[idoc])
         except KeyError:
             print("KeyError: Id du document érroné!")
     
     def getTfsForStem(self,stem):
         try:
-            return self.index_inverse[stem]
+            return copy.deepcopy(self.index_inverse[stem])
         except KeyError:
             print("KeyError: Stem introuvable!")
             
     def getTfIDFsForStem(self,stem):
         try:
-            return self.index_tf_idf_inverse[stem]
+            return copy.deepcopy(self.index_tf_idf_inverse[stem])
         except KeyError:
             print("KeyError: Stem introuvable!")
     
@@ -149,15 +154,15 @@ class IndexSimpler:
         return liste
         
     def getIndex(self):
-        return self.index
+        return copy.deepcopy(self.index)
         
     def getIndexInverse(self):
-        return self.index_inverse
+        return copy.deepcopy(self.index_inverse)
         
     def getIndexTfIdf(self):
-        return self.index_tf_idf
+        return copy.deepcopy(self.index_tf_idf)
         
     def getIndexTfIdfInverse(self):
-        return self.index_tf_idf_inverse
+        return copy.deepcopy(self.index_tf_idf_inverse)
         
         
