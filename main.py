@@ -8,6 +8,7 @@ Created on Sun Feb  7 17:02:24 2021
 import Parser
 import IndexSimpler
 import Weighter
+from IRModel import Vectoriel
 
 """
 document1="the new home has been saled on top forecasts"
@@ -31,7 +32,7 @@ indexSimpler.buildDocCollectionSimple("data\cacm\cacm.txt")
 docs=indexSimpler.getListDocs()
 indexSimpler.indexation(docs)
 
-weighter5=Weighter.Weighter5(indexSimpler)
+weighter1=Weighter.Weighter1(indexSimpler)
 tf=indexSimpler.getTfsForDoc(0)
 #print("tf \n",tf)
 
@@ -41,23 +42,18 @@ tfIdf=indexSimpler.getTfIDFsForDoc(0)
 
 #print(indexSimpler.getIndex())
 
-
 #print("\n 3 \n",weighter5.getWeightsForStem("report-intern"))
-
-
 
 #print("tfidf \n",tfIdf,"\n tf \n",tf,"\n resultat \n")
 
-
-
-
-
 #print(indexSimpler.getTfsForDoc(200))
 
-
 #print(weighter1.getWeightsForStem("extract"))
-print(weighter5.getWeightsForQuery("je extract science loss regim suis la comme toujours"))
+#print(weighter5.getWeightsForQuery("je extract science loss regim suis la comme toujours"))
 
+
+vectorielModel=Vectoriel(indexSimpler, weighter1,True)
+print(vectorielModel.getScores("je extract science loss regim suis la comme toujours"))
 
 
 
