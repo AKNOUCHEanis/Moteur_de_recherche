@@ -86,7 +86,11 @@ class Vectoriel(IRModel):
                 docsScores[k]=score
                 
         return docsScores
-                
+   
+class ModeleLangue(IRModel):
+    
+    def __init__(self):
+           
                 
             
                       
