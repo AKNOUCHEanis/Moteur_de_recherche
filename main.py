@@ -28,7 +28,7 @@ print(collection["1"].getTexte())
 
 
 indexSimpler=IndexSimpler.IndexSimpler()
-indexSimpler.buildDocCollectionSimple("data\cacm\cacm.txt")
+indexSimpler.buildDocCollectionSimple("data\cisi\cisi.txt")
 docs=indexSimpler.getListDocs()
 indexSimpler.indexation(docs)
 
@@ -53,7 +53,20 @@ tfIdf=indexSimpler.getTfIDFsForDoc(0)
 
 
 vectorielModel=Vectoriel(indexSimpler, weighter1,True)
-print(vectorielModel.getScores("je extract science loss regim suis la comme toujours"))
+
+print(vectorielModel.getRanking("sales top")[:10])
+
+print(indexSimpler.getIndexInverse().get("sales","notfound"))
+print(indexSimpler.getIndex().get(830))
+
+
+
+
+
+
+
+
+
 
 
 

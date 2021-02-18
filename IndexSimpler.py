@@ -15,7 +15,7 @@ class IndexSimpler:
     
     
     
-    def normalisation(self,doc):
+    def normalisation1(self,doc):
         """retourne un dictionnaire de mots et de leurs occurences"""
         words_doc1=doc.lower().split()
         words_stem=[]
@@ -24,6 +24,10 @@ class IndexSimpler:
             words_stem.append(porter.stem(w))
             
         return dict(collections.Counter(words_stem))
+    
+    def normalisation(self,doc):
+        porterStemmer=PorterStemmer()
+        return porterStemmer.getTextRepresentation(doc)
     
     def indexation(self,docs):
         """

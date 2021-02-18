@@ -20,7 +20,7 @@ class IRModel:
     
     def getRanking(self,query):
         """Retourne une liste de couple(document-score) ordonnés par score décroissant"""
-        score_doc=self.getScoresQuery(query)
+        score_doc=self.getScores(query)
         return sorted(score_doc.items(), key=lambda x: x[1],reverse=True)
     
     def getWeighter(self):
@@ -87,9 +87,7 @@ class Vectoriel(IRModel):
                 
         return docsScores
    
-class ModeleLangue(IRModel):
-    
-    def __init__(self):
+
            
                 
             
