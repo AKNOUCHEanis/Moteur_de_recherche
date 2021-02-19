@@ -21,11 +21,11 @@ docs=[document1, document2, document3, document4]
 parser=Parser.Parser()
 
 indexSimpler=IndexSimpler.IndexSimpler()
-#indexSimpler.buildDocCollectionSimple("data\cisi\cisi.txt")
-#docs=indexSimpler.getListDocs()
+indexSimpler.buildDocCollectionSimple("data\cisi\cisi.txt")
+docs=indexSimpler.getListDocs()
 indexSimpler.indexation(docs)
 
-print(indexSimpler.getIndex()[0])
+print(indexSimpler.getIndex()[1])
 
 
 

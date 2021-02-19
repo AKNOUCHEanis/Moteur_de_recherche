@@ -12,7 +12,7 @@ class Weighter:
     
     
     def __init__(self,index):
-        """Initialisation, on lui passe un index"""
+        """Initialisation, on lui passe un indexSimpler"""
         self.index=index
           
           
@@ -41,6 +41,7 @@ class Weighter:
       
       
 class Weighter1(Weighter):
+    
         
     def getWeightsForDoc(self, idDoc):
         return self.index.getTfsForDoc(idDoc)
@@ -89,7 +90,23 @@ class Weighter2(Weighter):
         for w in words:
             words_stem.append(porter.stem(w))
             
-        return dict(collections.Counter(words_stem))
+        counter=dict(collections.Counter(words_stem))
+        resultat=dict()
+        terms=[]
+        
+        indexTf=self.index.getIndex()
+        docs=[]
+        docs=indexTf.keys()
+        for d in docs:
+            doc=dict()
+            terms=indexTf[d].keys()
+            for t in terms:
+                if t in words_stem:
+                    doc[t]=counter[t]
+                else:
+                    doc[t]=0
+            resultat[d]=doc
+        return resultat
     
 
 class Weighter3(Weighter):

@@ -5,7 +5,7 @@ Created on Sun Feb  7 17:02:24 2021
 @author: DELL VOSTRO
 """
 
-import Parser
+from Parser import Parser
 import IndexSimpler
 import Weighter
 from IRModel import Vectoriel
@@ -23,41 +23,33 @@ collection=parser.buildDocCollectionSimple("data\cacm\cacm.txt")
 print(collection["1"].getTexte())
 """
 
-#collection=parser.buildDocumentCollectionRegex("data\cacm\cacm.txt")
-#print(collection["1"].getTexte())
+
+parser=Parser()
+parser.buildDocCollectionSimple("data\cisi\cisi.txt")
+docs=parser.getListDocs()
 
 
-indexSimpler=IndexSimpler.IndexSimpler()
-indexSimpler.buildDocCollectionSimple("data\cisi\cisi.txt")
-docs=indexSimpler.getListDocs()
-indexSimpler.indexation(docs)
+indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+indexSimpler.indexation()
+indexSimpler.indexation_tf_idf()
 
-weighter1=Weighter.Weighter1(indexSimpler)
-tf=indexSimpler.getTfsForDoc(0)
-#print("tf \n",tf)
-
-indexSimpler.indexation_tf_idf(docs)
-tfIdf=indexSimpler.getTfIDFsForDoc(0)
-#print("\n tfIdf \n",tfIdf)
-
-#print(indexSimpler.getIndex())
-
-#print("\n 3 \n",weighter5.getWeightsForStem("report-intern"))
-
-#print("tfidf \n",tfIdf,"\n tf \n",tf,"\n resultat \n")
-
-#print(indexSimpler.getTfsForDoc(200))
-
-#print(weighter1.getWeightsForStem("extract"))
-#print(weighter5.getWeightsForQuery("je extract science loss regim suis la comme toujours"))
+#print(indexSimpler.getTfsForStem("system"))
+#print(indexSimpler.getTfsForDoc(126))
 
 
-vectorielModel=Vectoriel(indexSimpler, weighter1,True)
+weighter=Weighter.Weighter2(indexSimpler)
+#print("Test getWeightsFOrStem\n",weighter.getWeightsForStem("grow"))
+#print("\n Test getWeightsForDoc \n",weighter.getWeightsForDoc(28))
+#print("\n Test getWeightsForQuery \n",weighter.getWeightsForQuery("grow sale for house")[28])
 
-print(vectorielModel.getRanking("sales top")[:10])
 
-print(indexSimpler.getIndexInverse().get("sales","notfound"))
-print(indexSimpler.getIndex().get(830))
+vectorielModel=Vectoriel(indexSimpler, weighter,True)
+
+print(vectorielModel.getRanking("sales")[:10])
+print(indexSimpler.getTfsForStem("sale"))
+
+#print(indexSimpler.getIndexInverse().get("sales","notfound"))
+#print(indexSimpler.getIndex().get(126))
 
 
 

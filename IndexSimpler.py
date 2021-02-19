@@ -11,9 +11,11 @@ import numpy as np
 import re
 import copy
 
-class IndexSimpler:
+class IndexSimpler():
     
     
+    def __init__(self,collection):
+        self.collection=collection
     
     def normalisation1(self,doc):
         """retourne un dictionnaire de mots et de leurs occurences"""
@@ -29,24 +31,15 @@ class IndexSimpler:
         porterStemmer=PorterStemmer()
         return porterStemmer.getTextRepresentation(doc)
     
-    def indexation(self,docs):
-        """
-        Parameters 
-        ----------
-        docs : TYPE liste de documents 
-            DESCRIPTION.
-
-        Clacul l'index tf et l'index inverse tf
-        -------
-        None.
-
-        """
+    def indexation(self):
+        
+        documents=self.collection
         
         index=dict()
         index_inverse=dict()
         
-        for i in range(len(docs)):
-            counter=self.normalisation(docs[i])
+        for i in documents.keys():
+            counter=self.normalisation(documents[i].getText())
             index[i]=counter
             
             for k in index[i].keys():
@@ -63,14 +56,15 @@ class IndexSimpler:
         self.docs=index.keys()
         self.stems=index_inverse.keys()
         
-    def  indexation_tf_idf(self,docs):
+    def  indexation_tf_idf(self):
+        documents=self.collection
         index={}
         index=copy.deepcopy(self.index)
         
         index_inverse={}
         index_inverse=copy.deepcopy(self.index_inverse)
         
-        N=len(docs)
+        N=len(documents.keys())
         df={}
         idf={}
         for k in index_inverse.keys():
@@ -118,7 +112,7 @@ class IndexSimpler:
     
     def getStrDoc(self,idoc): # Il faut d'abord créer la collection avec buildCollectionSimple
         return self.collection[idoc]
-    
+    """
     def buildDocCollectionSimple(self,chemin_doc): 
         file=open(chemin_doc,"r")
         lignes=file.readlines()
@@ -148,7 +142,7 @@ class IndexSimpler:
         self.collection= collection
         
     def getListDocs(self):
-        """retourne une liste de document texte"""
+        #retourne une liste de document texte
         liste=[]
         keys=self.collection.keys()
         
@@ -156,7 +150,7 @@ class IndexSimpler:
             liste.append(self.collection[k])
                 
         return liste
-        
+     """   
     def getIndex(self):
         return copy.deepcopy(self.index)
         
