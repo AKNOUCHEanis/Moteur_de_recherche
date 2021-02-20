@@ -163,4 +163,13 @@ class IndexSimpler():
     def getIndexTfIdfInverse(self):
         return copy.deepcopy(self.index_tf_idf_inverse)
         
+    def getCollectionSize(self):
+        
+        index=self.index
+        size=0
+        for d in index.keys():
+            size+=np.sum([int(tf) for tf in index[d].values()])
+            
+        return size
+            
         
