@@ -10,8 +10,9 @@ import IndexSimpler
 import Weighter
 from IRModel import Vectoriel
 from utils.TextRepresenter import PorterStemmer
+import re
 
-
+"""
 document1="the new home has been saled on top forecasts"
 document2="the home sales rise in july"
 document3="there is an increase in home sales in july"
@@ -26,8 +27,11 @@ docs=indexSimpler.getListDocs()
 indexSimpler.indexation(docs)
 
 print(indexSimpler.getIndex()[1])
+"""
 
-
+string="    111    2    3    4"
+values=re.findall(r'(\d+)',string)
+print(values)
 
 
 

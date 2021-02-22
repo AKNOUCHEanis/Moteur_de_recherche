@@ -9,6 +9,7 @@ from Parser import Parser
 import IndexSimpler
 import Weighter
 from IRModel import Vectoriel, ModeleLangue, Okapi
+from QueryParser import QueryParser
 
 """
 document1="the new home has been saled on top forecasts"
@@ -24,14 +25,14 @@ print(collection["1"].getTexte())
 """
 
 
-parser=Parser()
-parser.buildDocCollectionSimple("data\cisi\cisi.txt")
-docs=parser.getListDocs()
+#parser=Parser()
+#parser.buildDocCollectionSimple("data\cisi\cisi.txt")
+#docs=parser.getListDocs()
 
 
-indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
-indexSimpler.indexation()
-indexSimpler.indexation_tf_idf()
+#indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+#indexSimpler.indexation()
+#indexSimpler.indexation_tf_idf()
 
 #print(indexSimpler.getTfsForStem("system"))
 #print(indexSimpler.getTfsForDoc(126))
@@ -47,12 +48,19 @@ indexSimpler.indexation_tf_idf()
 #print(vectorielModel.getRanking("sales")[:10])
 #print(indexSimpler.getTfsForStem("sale"))
 
-modeleLangue=ModeleLangue(indexSimpler,0.8)
-print("First Docs retournés par le modele de langue \n",modeleLangue.getRanking("sales")[:10])
+#modeleLangue=ModeleLangue(indexSimpler,0.8)
+#print("First Docs retournés par le modele de langue \n",modeleLangue.getRanking("sales")[:10])
 #print(indexSimpler.getTfsForStem("sale"))
 
-okapi=Okapi(indexSimpler,1.2,0.75)
-print("\n First Docs retournés par le modele Okapi BM25 \n",okapi.getRanking("sales")[:10])
+#okapi=Okapi(indexSimpler,1.2,0.75)
+#print("\n First Docs retournés par le modele Okapi BM25 \n",okapi.getRanking("sales")[:10])
+
+
+queryParser=QueryParser()
+collectionQuery=queryParser.buildCollectionQuery("data\cisi\cisi.qry", "data\cisi\cisi.rel")
+print(collectionQuery[1].getRelIds())
+
+
 
 
 
