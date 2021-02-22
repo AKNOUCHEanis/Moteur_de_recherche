@@ -4,7 +4,7 @@ Created on Mon Feb 15 01:14:05 2021
 
 @author: DELL VOSTRO
 """
-import copy
+
 import utils.porter as porter
 import numpy as np
 

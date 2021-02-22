@@ -16,9 +16,10 @@ class IndexSimpler():
     
     def __init__(self,collection):
         self.collection=collection
-    
+        
+    """
     def normalisation1(self,doc):
-        """retourne un dictionnaire de mots et de leurs occurences"""
+        #retourne un dictionnaire de mots et de leurs occurences
         words_doc1=doc.lower().split()
         words_stem=[]
 
@@ -26,13 +27,18 @@ class IndexSimpler():
             words_stem.append(porter.stem(w))
             
         return dict(collections.Counter(words_stem))
-    
+    """
     def normalisation(self,doc):
         porterStemmer=PorterStemmer()
         return porterStemmer.getTextRepresentation(doc)
     
     def indexation(self):
-        
+        """
+
+        indexe la collection en créant un index et un index inverse
+        -------
+
+        """
         documents=self.collection
         
         index=dict()
@@ -57,6 +63,13 @@ class IndexSimpler():
         self.stems=index_inverse.keys()
         
     def  indexation_tf_idf(self):
+        """
+        Création d'un index et index inverse avec des poids Tf-Idf
+
+        -------
+        None.
+
+        """
         documents=self.collection
         index={}
         index=copy.deepcopy(self.index)
@@ -84,7 +97,16 @@ class IndexSimpler():
         
         
     def getTfsForDoc(self,idoc):
-        #idoc id document
+        """
+        Parameters
+        ----------
+        idoc : Integer
+            id du Document
+
+        Returns
+        ------
+         un dict de mots et de valeur Tf d'un document 
+        """
         try:
             return  copy.deepcopy(self.index[idoc])
         except KeyError:
@@ -92,26 +114,55 @@ class IndexSimpler():
             
 
     def getTfIDFsForDoc(self,idoc):
-        #idoc id document
+        """
+        Parameters
+        ----------
+        idoc : Integer
+            id du Document
+
+        Returns
+        -------
+         un dict de mots et de valeur Tf-idf d'un document 
+
+        """
         try:
             return copy.deepcopy(self.index_tf_idf[idoc])
         except KeyError:
             print("KeyError: Id du document érroné!")
     
     def getTfsForStem(self,stem):
+        """
+        Parameters
+        ----------
+        stem : String
+
+        Returns
+        -------
+        retourne un dict de documents et valeur Tf pour le mot Stem
+        """
         try:
             return copy.deepcopy(self.index_inverse[stem])
         except KeyError:
             print("KeyError: Stem introuvable!")
             
     def getTfIDFsForStem(self,stem):
+        """
+        Parameters
+        ----------
+        stem : String
+
+        Returns
+        -------
+        Retourne un dict de documents et valeur Tf-Idf pour le mot Stem
+
+        """
         try:
             return copy.deepcopy(self.index_tf_idf_inverse[stem])
         except KeyError:
             print("KeyError: Stem introuvable!")
     
-    def getStrDoc(self,idoc): # Il faut d'abord créer la collection avec buildCollectionSimple
-        return self.collection[idoc]
+    def getStrDoc(self,idoc): 
+        return self.collection[idoc].getText()
     """
     def buildDocCollectionSimple(self,chemin_doc): 
         file=open(chemin_doc,"r")
@@ -164,7 +215,9 @@ class IndexSimpler():
         return copy.deepcopy(self.index_tf_idf_inverse)
         
     def getCollectionSize(self):
-        
+        """
+            retourne la taille de la collection en nombre de mots
+        """
         index=self.index
         size=0
         for d in index.keys():
