@@ -78,12 +78,17 @@ class Parser:
                 i-=1
                 
             elif lignes[i].startswith(".X") :
-                link = lignes[i+1].split(' ')[0]
+                link=[]
+                if len(lignes[i+1].split())!=0:
+                    link.append(lignes[i+1].split()[0])
                 i+=2
                 while(i < N and lignes[i].startswith('.') == False):
-                    link += ' '+lignes[i].split(' ')[0]
+                    #link += ' '+lignes[i].split(' ')[0]
+                    if len(lignes[i].split())!=0:
+                        link.append(lignes[i].split()[0])
                     i+=1
                 i-=1
+                
         d = Document.Document(idDoc,title,date,author,keywords,txt,link)
         self.documents[idDoc]=d
         f.close()

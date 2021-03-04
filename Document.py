@@ -17,7 +17,7 @@ class Document():
         self.author= author
         self.keywords= keywords
         self.txt = txt
-        self.link= link
+        self.links= link
         
         
     def getId(self):
@@ -26,6 +26,9 @@ class Document():
     def getText(self):
         return self.txt
      
+    def getLinks(self):
+        return {i:self.links.count(i) for i in self.links }
+        
         
     
         

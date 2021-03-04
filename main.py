@@ -25,12 +25,17 @@ print(collection["1"].getTexte())
 """
 
 
-#parser=Parser()
-#parser.buildDocCollectionSimple("data\cisi\cisi.txt")
-#docs=parser.getListDocs()
+parser=Parser()
+parser.buildDocCollectionSimple("data\cisi\cisi.txt")
+docs=parser.getListDocs()
+#print(docs[0].getLinks())
 
+indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+indexSimpler.indexationHyperLinks()
 
-#indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+#print(indexSimpler.getHyperLinksFrom(1))
+print(indexSimpler.index_HyperLinks_inverse[1])
+
 #indexSimpler.indexation()
 #indexSimpler.indexation_tf_idf()
 
@@ -56,15 +61,16 @@ print(collection["1"].getTexte())
 #print("\n First Docs retournés par le modele Okapi BM25 \n",okapi.getRanking("sales")[:10])
 
 
-queryParser=QueryParser()
-collectionQuery=queryParser.buildCollectionQuery("data\cisi\cisi.qry", "data\cisi\cisi.rel")
+#queryParser=QueryParser()
+#collectionQuery=queryParser.buildCollectionQuery("data\cisi\cisi.qry", "data\cisi\cisi.rel")
 #print(collectionQuery[1].getRelIds())
 
 
 
 
-modele=FMesure(1)
-print(modele.evalQuery(collectionQuery[1].getRelIds(), collectionQuery[1],30))
+
+#modele=FMesure(1)
+#print(modele.evalQuery(collectionQuery[1].getRelIds(), collectionQuery[1],30))
 
 
 

@@ -94,7 +94,45 @@ class IndexSimpler():
                  
         self.index_tf_idf=index
         self.index_tf_idf_inverse=index_inverse
+    
+    def indexationHyperLinks(self):
+        """
+        Creation d'index hyperLinks et index hyperLinksInverse
+
+        """
+        documents=self.collection
+        self.index_HyperLinks={}
+        self.index_HyperLinks_inverse={}
         
+        doc_keys=documents.keys()
+        
+        for d in doc_keys:
+            self.index_HyperLinks[d]=documents[d].getLinks()
+            
+            for k in self.index_HyperLinks[d].keys():
+                k=int(k)
+                if k not in self.index_HyperLinks_inverse.keys():
+                    self.index_HyperLinks_inverse[k]={}
+                    self.index_HyperLinks_inverse[k][d]=1
+                elif d not in self.index_HyperLinks_inverse[k].keys():
+                    self.index_HyperLinks_inverse[k][d]=1
+                else:
+                    self.index_HyperLinks_inverse[k][d]+=1
+                    
+        
+    def getHyperLinksTo(self, idDoc):
+        try:
+            return self.index_HyperLinks_inverse[idDoc]
+        
+        except KeyError:
+            print("KeyError: Id du document érroné!")
+        
+    def getHyperLinksFrom(self, idDoc):
+        try:
+            return self.index_HyperLinks[idDoc]
+        
+        except KeyError:
+            print("KeyError: Id du document érroné!")
         
     def getTfsForDoc(self,idoc):
         """
