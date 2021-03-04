@@ -10,7 +10,7 @@ import IndexSimpler
 import Weighter
 from IRModel import Vectoriel, ModeleLangue, Okapi
 from QueryParser import QueryParser
-
+from EvalMesure import PrecisionModele, RappelModele, FMesure
 """
 document1="the new home has been saled on top forecasts"
 document2="the home sales rise in july"
@@ -58,11 +58,13 @@ print(collection["1"].getTexte())
 
 queryParser=QueryParser()
 collectionQuery=queryParser.buildCollectionQuery("data\cisi\cisi.qry", "data\cisi\cisi.rel")
-print(collectionQuery[1].getRelIds())
+#print(collectionQuery[1].getRelIds())
 
 
 
 
+modele=FMesure(1)
+print(modele.evalQuery(collectionQuery[1].getRelIds(), collectionQuery[1],30))
 
 
 
