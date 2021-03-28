@@ -10,7 +10,10 @@ import IndexSimpler
 import Weighter
 from IRModel import Vectoriel, ModeleLangue, Okapi
 from QueryParser import QueryParser
-from EvalMesure import PrecisionModele, RappelModele, FMesure
+from EvalMesure import PrecisionModele, RappelModele, FMesure, NDCG
+from QueryParser import QueryParser
+from EvalIRModel import EvalIRModel
+
 """
 document1="the new home has been saled on top forecasts"
 document2="the home sales rise in july"
@@ -30,11 +33,33 @@ parser.buildDocCollectionSimple("data\cisi\cisi.txt")
 docs=parser.getListDocs()
 #print(docs[0].getLinks())
 
-indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
-indexSimpler.indexationHyperLinks()
+#Test EvalIRModel
+
+queryParser=QueryParser()
+queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi\cisi.rel")
+
+evalIRModel=EvalIRModel()
+#print(queryCollection[1].getRelIds())
+precisionModele=PrecisionModele()
+rappelModele=RappelModele()
+
+print(evalIRModel.differneceSignificative(precisionModele, rappelModele, [[28,2,3,56,6]],[queryCollection[1]]))
+#print(precisionModele.evalQuery([28,2,3,56,6],queryCollection[1],5))
+
+#evalIRModel.evalQueries([[28,2,3,56,6]],[queryCollection[1]])
+
+
+
+
+
+
+
+
+#indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+#indexSimpler.indexationHyperLinks()
 
 #print(indexSimpler.getHyperLinksFrom(1))
-print(indexSimpler.index_HyperLinks_inverse[1])
+#print(indexSimpler.index_HyperLinks_inverse[1])
 
 #indexSimpler.indexation()
 #indexSimpler.indexation_tf_idf()
