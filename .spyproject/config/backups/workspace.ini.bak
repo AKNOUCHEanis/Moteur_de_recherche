@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['Weighter.py', 'main.py', 'EvalMesure.py', 'IndexSimpler.py']
+recent_files = ['Weighter.py', 'main.py', 'EvalMesure.py', 'EvalIRModel.py', 'IndexSimpler.py', 'IRModel.py', 'Query.py', 'QueryParser.py', 'Parser.py']
 
