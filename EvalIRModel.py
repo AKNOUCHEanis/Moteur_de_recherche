@@ -6,12 +6,51 @@ Created on Sun Mar 28 03:01:50 2021
 """
 import numpy as np
 from EvalMesure import PrecisionModele, RappelModele, FMesure, AvgPrecision, ReciprocalRank, NDCG
+from IRModel import Vectoriel, ModeleLangue, Okapi
 import scipy.stats as stats
 
 class EvalIRModel:
     
-    def __init__(self):
-        pass
+    def __init__(self,index,weighter,lambda_,B,K1):
+        self.index=index
+        self.weighter=weighter
+        self.lambda_=lambda_
+        self.B=B
+        self.K1=K1
+    
+    def evalModel(self,queries):
+        print("Modele Vectoriel Normalisé :\n")
+        vectorielT=Vectoriel(self.index,self.weighter,True)
+        listes=[]
+        for q in queries:
+            listes.append(list(vectorielT.getRanking(q).keys())[20]) #20 documents pertinents
+        
+        self.evalQueries(listes,queries)
+       
+        print("Modele Vectoriel Non Normalisé :\n")
+        vectorielF=Vectoriel(self.index,self.weighter,False)
+        listes=[]
+        for q in queries:
+            listes.append(list(vectorielF.getRanking(q).keys())[20]) #20 documents pertinents
+        
+        self.evalQueries(listes,queries)
+        
+        print("Modele de langue lambda=",self.lambda_," :\n")
+        modeleLangue=ModeleLangue(self.index,self.lambda_)
+        listes=[]
+        for q in queries:
+            listes.append(list(modeleLangue.getRanking(q).keys())[20]) #20 documents pertinents
+        
+        self.evalQueries(listes,queries)
+        
+        print("Modele Okapi K1=",self.K1," B=",self.B,":\n")
+        modeleOkapi=Okapi(self.index,self.K1,self.B)
+        listes=[]
+        for q in queries:
+            listes.append(list(modeleOkapi.getRanking(q).keys())[20]) #20 documents pertinents
+        
+        self.evalQueries(listes,queries)
+        
     
     def evalQueries(self, listes, queries):
         """
