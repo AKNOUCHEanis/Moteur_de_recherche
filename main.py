@@ -34,10 +34,22 @@ parser.buildDocCollectionSimple("data\cisi\cisi.txt")
 docs=parser.getListDocs()
 
 #Test PageRank
+
+indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+indexSimpler.indexationHyperLinks()
+indexSimpler.indexation()
+indexSimpler.indexation_tf_idf()
+
 queryParser=QueryParser()
 queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi\cisi.rel")
 
-pageRank=PageRank(10,)
+weighter=Weighter.Weighter1(indexSimpler)
+
+model=Vectoriel(indexSimpler,weighter,True)
+
+pageRank=PageRank(model,weighter,n=3,k=1)
+scores=pageRank.get_scores(queryCollection[1].getText(),max_iter=10)
+print(scores)
 
 
 

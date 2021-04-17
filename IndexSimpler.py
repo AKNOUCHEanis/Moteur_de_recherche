@@ -98,6 +98,7 @@ class IndexSimpler():
     def indexationHyperLinks(self):
         """
         Creation d'index hyperLinks et index hyperLinksInverse
+        {id_doc: {id_doc : nombre de fois qu'il a été indéxé} }
 
         """
         documents=self.collection
@@ -121,13 +122,15 @@ class IndexSimpler():
                     
         
     def getHyperLinksTo(self, idDoc):
+        """Retourne tous les documents qui pontent idDoc"""
         try:
             return self.index_HyperLinks_inverse[idDoc]
         
         except KeyError:
-            print("KeyError: Id du document érroné!")
+            print("KeyError: Id du document érroné ou bien aucun document ne pointe le document ",idDoc," !")
         
     def getHyperLinksFrom(self, idDoc):
+        """Retourne tous les documents pointés par idDoc"""
         try:
             return self.index_HyperLinks[idDoc]
         
