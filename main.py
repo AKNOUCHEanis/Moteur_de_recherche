@@ -13,6 +13,7 @@ from QueryParser import QueryParser
 from EvalMesure import PrecisionModele, RappelModele, FMesure, NDCG
 from QueryParser import QueryParser
 from EvalIRModel import EvalIRModel
+from PageRank import PageRank
 
 """
 document1="the new home has been saled on top forecasts"
@@ -31,19 +32,29 @@ print(collection["1"].getTexte())
 parser=Parser()
 parser.buildDocCollectionSimple("data\cisi\cisi.txt")
 docs=parser.getListDocs()
-#print(docs[0].getLinks())
+
+#Test PageRank
+queryParser=QueryParser()
+queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi\cisi.rel")
+
+pageRank=PageRank(10,)
+
+
+
+
+
 
 #Test EvalIRModel
-
+"""
 queryParser=QueryParser()
 queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi\cisi.rel")
 
 evalIRModel=EvalIRModel()
-#print(queryCollection[1].getRelIds())
+print(queryCollection[1].getRelIds())
 precisionModele=PrecisionModele()
 rappelModele=RappelModele()
-
-print(evalIRModel.differneceSignificative(precisionModele, rappelModele, [[28,2,3,56,6]],[queryCollection[1]]))
+"""
+#print(evalIRModel.differneceSignificative(precisionModele, rappelModele, [[28,2,3,56,6]],[queryCollection[1]]))
 #print(precisionModele.evalQuery([28,2,3,56,6],queryCollection[1],5))
 
 #evalIRModel.evalQueries([[28,2,3,56,6]],[queryCollection[1]])
@@ -52,15 +63,14 @@ print(evalIRModel.differneceSignificative(precisionModele, rappelModele, [[28,2,
 
 
 
+"""
+indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
+indexSimpler.indexationHyperLinks()
 
-
-
-#indexSimpler=IndexSimpler.IndexSimpler(parser.getCollection())
-#indexSimpler.indexationHyperLinks()
-
-#print(indexSimpler.getHyperLinksFrom(1))
-#print(indexSimpler.index_HyperLinks_inverse[1])
-
+print(docs[0].getLinks())
+print(indexSimpler.getHyperLinksFrom(1558))
+print(indexSimpler.getHyperLinksTo(1))
+"""
 #indexSimpler.indexation()
 #indexSimpler.indexation_tf_idf()
 

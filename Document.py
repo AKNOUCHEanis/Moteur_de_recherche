@@ -27,6 +27,8 @@ class Document():
         return self.txt
      
     def getLinks(self):
+        """ {id document referencé :  nombre de fois que le document a été réferencé }"""
+        
         return {i:self.links.count(i) for i in self.links }
         
         
