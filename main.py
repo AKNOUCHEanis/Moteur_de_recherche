@@ -45,31 +45,25 @@ queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi
 
 weighter=Weighter.Weighter1(indexSimpler)
 
+"""
 model=Vectoriel(indexSimpler,weighter,True)
 
 pageRank=PageRank(model,weighter,n=3,k=1)
 scores=pageRank.get_scores(queryCollection[1].getText(),max_iter=10)
 print(scores)
-
+"""
 
 
 
 
 
 #Test EvalIRModel
-"""
 queryParser=QueryParser()
 queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi\cisi.rel")
+#print(type(queryCollection))
+evalIRModel=EvalIRModel(indexSimpler,weighter,lambda_=0.8,K1=1.2,B=0.75)
+evalIRModel.evalModel(queryCollection)
 
-evalIRModel=EvalIRModel()
-print(queryCollection[1].getRelIds())
-precisionModele=PrecisionModele()
-rappelModele=RappelModele()
-"""
-#print(evalIRModel.differneceSignificative(precisionModele, rappelModele, [[28,2,3,56,6]],[queryCollection[1]]))
-#print(precisionModele.evalQuery([28,2,3,56,6],queryCollection[1],5))
-
-#evalIRModel.evalQueries([[28,2,3,56,6]],[queryCollection[1]])
 
 
 

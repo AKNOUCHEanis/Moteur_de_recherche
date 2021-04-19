@@ -177,10 +177,15 @@ class Okapi(IRModel):
     def getIdf(self,term,index,index_inverse,pertinence=None):
         
         N=len(index.keys())
-        n=len(index_inverse[term].keys())
+        if term in index_inverse.keys():
+            n=len(index_inverse[term].keys())
+        else:
+            n=0
         
-        if pertinence is None:
+        if pertinence is None and n!=0 :
             return np.log(N/n)
+        elif n==0 :
+            return 0
         else:
             r,R=pertinence
             return np.log((r+0.5)*(N-n-R+r+0.5)/((R-r+0.5)*(n-r+0.5)))
@@ -189,7 +194,7 @@ class Okapi(IRModel):
     def getRanking(self,query,pertinence=None):
         """Retourne une liste de couple(document-score) ordonnés par score décroissant"""
         score_doc=self.getScores(query,pertinence)
-        return sorted(score_doc.items(), key=lambda x: x[1],reverse=True) 
+        return dict(sorted(score_doc.items(), key=lambda x: x[1],reverse=True))
         
                 
             

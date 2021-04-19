@@ -19,35 +19,36 @@ class EvalIRModel:
         self.K1=K1
     
     def evalModel(self,queries):
+        
         print("Modele Vectoriel Normalisé :\n")
         vectorielT=Vectoriel(self.index,self.weighter,True)
         listes=[]
-        for q in queries:
-            listes.append(list(vectorielT.getRanking(q).keys())[20]) #20 documents pertinents
+        for q in queries.keys():
+            listes.append(list(vectorielT.getRanking(queries[q].getText()).keys())[:20]) #20 documents pertinents
         
         self.evalQueries(listes,queries)
        
         print("Modele Vectoriel Non Normalisé :\n")
         vectorielF=Vectoriel(self.index,self.weighter,False)
         listes=[]
-        for q in queries:
-            listes.append(list(vectorielF.getRanking(q).keys())[20]) #20 documents pertinents
+        for q in queries.keys():
+            listes.append(list(vectorielF.getRanking(queries[q].getText()).keys())[:20]) #20 documents pertinents
         
         self.evalQueries(listes,queries)
         
         print("Modele de langue lambda=",self.lambda_," :\n")
         modeleLangue=ModeleLangue(self.index,self.lambda_)
         listes=[]
-        for q in queries:
-            listes.append(list(modeleLangue.getRanking(q).keys())[20]) #20 documents pertinents
+        for q in queries.keys():
+            listes.append(list(modeleLangue.getRanking(queries[q].getText()).keys())[:20]) #20 documents pertinents
         
         self.evalQueries(listes,queries)
         
         print("Modele Okapi K1=",self.K1," B=",self.B,":\n")
         modeleOkapi=Okapi(self.index,self.K1,self.B)
         listes=[]
-        for q in queries:
-            listes.append(list(modeleOkapi.getRanking(q).keys())[20]) #20 documents pertinents
+        for q in queries.keys():
+            listes.append(list(modeleOkapi.getRanking(queries[q].getText()).keys())[:20]) #20 documents pertinents
         
         self.evalQueries(listes,queries)
         
@@ -56,7 +57,7 @@ class EvalIRModel:
         """
         Parameters
         ----------
-        queries : List of query
+        queries : Dict of Query
             Contient des queries 
         listes : List of docs Id 
             Contient des ids de documents
@@ -78,16 +79,17 @@ class EvalIRModel:
         scoreAvgPrecision=[]
         scoreReciprocalRank=[]
         scoreNDCG=[]
+        i=0
         
-        for i in range(len(queries)):
+        for q in queries.keys():
             
-            scorePrecision.append(precision.evalQuery(listes[i], queries[i], len(listes[i])))
-            scoreRappel.append(rappel.evalQuery(listes[i], queries[i], len(listes[i])))
-            scoreFMesure.append(fMesure.evalQuery(listes[i], queries[i], len(listes[i])))
-            scoreAvgPrecision.append(avgPrecision.evalQuery(listes[i], queries[i]))
-            scoreReciprocalRank.append(reciprocalRank.evalQuery(listes[i], queries[i]))
-            scoreNDCG.append(ndcg.evalQuery(listes[i], queries[i], len(listes[i])))
-            
+            scorePrecision.append(precision.evalQuery(listes[i], queries[q], len(listes[i])))
+            scoreRappel.append(rappel.evalQuery(listes[i], queries[q], len(listes[i])))
+            scoreFMesure.append(fMesure.evalQuery(listes[i], queries[q], len(listes[i])))
+            scoreAvgPrecision.append(avgPrecision.evalQuery(listes[i], queries[q]))
+            scoreReciprocalRank.append(reciprocalRank.evalQuery(listes[i], queries[q]))
+            scoreNDCG.append(ndcg.evalQuery(listes[i], queries[q], len(listes[i])))
+            i+=1
         print("Modele Precision :\n mean: ","%.3f"%np.mean(scorePrecision)," std: ","%.3f"%np.std(scorePrecision))
         print("Modele Rappel :\n mean: ","%.3f"%np.mean(scoreRappel)," std: ","%.3f"%np.std(scoreRappel))
         print("Fmesure :\n mean: ","%.3f"%np.mean(scoreFMesure)," std: ","%.3f"%np.std(scoreFMesure)) 
@@ -113,11 +115,11 @@ class EvalIRModel:
         """
         scoreModel1=[]
         scoreModel2=[]
-        
-        for i in range(len(queries)):
-            scoreModel1.append(model1.evalQuery(listes[i],queries[i],len(listes[i])))   
-            scoreModel2.append(model2.evalQuery(listes[i],queries[i],len(listes[i])))   
-        
+        i=0
+        for q in queries.keys():
+            scoreModel1.append(model1.evalQuery(listes[i],queries[q].getText(),len(listes[i])))   
+            scoreModel2.append(model2.evalQuery(listes[i],queries[q].getText(),len(listes[i])))   
+            i+=1
         statistic, pvalue=stats.ttest_ind(scoreModel1,scoreModel2)
         
         if pvalue<0.05:

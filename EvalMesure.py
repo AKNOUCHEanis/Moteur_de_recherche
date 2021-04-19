@@ -29,12 +29,15 @@ class RappelModele(EvalMesure):
     
     def evalQuery(self,liste,query,k):
         
-        tp=0  #TruePositif    docs pertinents sélectionnés
-        fn=0  #FalseNegative  docs pertinents Non sélectionnés
-        tp=len([ id  for id in liste[:k] if id in query.getRelIds() ])
-        fn=len([ id  for id in query.getRelIds() if id not in liste[:k] ])
-        
-        return tp/(tp+fn)
+        if len(query.getRelIds())!=0:
+            tp=0  #TruePositif    docs pertinents sélectionnés
+            fn=0  #FalseNegative  docs pertinents Non sélectionnés
+            tp=len([ id  for id in liste[:k] if id in query.getRelIds() ])
+            fn=len([ id  for id in query.getRelIds() if id not in liste[:k] ])
+            
+            return tp/(tp+fn)
+        else:
+            return 0
     
     
 class FMesure(EvalMesure):
@@ -98,22 +101,41 @@ class ReciprocalRank(EvalMesure):
             
 class NDCG(EvalMesure):
     
-    def evalQuery(self,liste,query,k):
-        liste_rel=[ 1 if d in query.getRelIds() else 0 for d in liste[:k]]
+    def evalQuery1(self,liste,query,k):
         
-        dcgk=liste_rel[0]+ np.sum([ x/np.log2(liste_rel.index(x)+1) for x in liste_rel[1:k]])
+        if len(query.getRelIds())!=0 and len(liste)!=0:
+            liste_rel=[ 1 if d in query.getRelIds() else 0 for d in liste[:k]]
+            
+            dcgk=liste_rel[0]+ np.sum([ x/np.log2(liste_rel.index(x)+1) for x in liste_rel[1:k]])
+            
+            n_rel=np.sum(liste_rel)
+            idcgk=0
         
-        n_rel=np.sum(liste_rel)
-        idcgk=0
-        if n_rel>=1:
             for i in range(2,n_rel+1):
                 idcgk+=1/np.log2(i)
                 
+            print("\n 1- ",dcgk/(idcgk+1))    
             return dcgk/(idcgk+1)
         else:
+            print("\n 2- 0")
             return 0
         
+    def evalQuery(self, liste, query,k):
+
+        pertinent = query.getRelIds()
         
+        if liste[0] in pertinent:
+            dcg=1 
+        else :
+            dcg=0  
+        idcg=0
+
+        for i in range(1,len(liste)):
+            if liste[i] in pertinent: 
+                dcg+=1/np.log2(i+1)
+            idcg+=1/np.log2(i+1)
+
+        return dcg/(idcg+1)    
         
         
         
