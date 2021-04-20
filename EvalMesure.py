@@ -82,6 +82,19 @@ class AvgPrecision(EvalMesure):
             return 0
         else:
             return score/n 
+        
+class MAP(EvalMesure):
+    
+    def evalQueries(self, listes, queries):
+        val=0
+        avgp=AvgPrecision()
+        i=0
+        for q in queries.keys():
+           val+=avgp.evalQuery(listes[i],queries[q]) 
+           i+=1
+           
+        return val/len(listes)
+        
     
 class ReciprocalRank(EvalMesure):
       
@@ -101,24 +114,6 @@ class ReciprocalRank(EvalMesure):
             
 class NDCG(EvalMesure):
     
-    def evalQuery1(self,liste,query,k):
-        
-        if len(query.getRelIds())!=0 and len(liste)!=0:
-            liste_rel=[ 1 if d in query.getRelIds() else 0 for d in liste[:k]]
-            
-            dcgk=liste_rel[0]+ np.sum([ x/np.log2(liste_rel.index(x)+1) for x in liste_rel[1:k]])
-            
-            n_rel=np.sum(liste_rel)
-            idcgk=0
-        
-            for i in range(2,n_rel+1):
-                idcgk+=1/np.log2(i)
-                
-            print("\n 1- ",dcgk/(idcgk+1))    
-            return dcgk/(idcgk+1)
-        else:
-            print("\n 2- 0")
-            return 0
         
     def evalQuery(self, liste, query,k):
 

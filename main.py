@@ -10,9 +10,9 @@ import IndexSimpler
 import Weighter
 from IRModel import Vectoriel, ModeleLangue, Okapi
 from QueryParser import QueryParser
-from EvalMesure import PrecisionModele, RappelModele, FMesure, NDCG
+from EvalMesure import PrecisionModele, RappelModele, FMesure, NDCG, MAP
 from QueryParser import QueryParser
-from EvalIRModel import EvalIRModel
+from EvalIRModel import EvalIRModel, OptimIRModel
 from PageRank import PageRank
 
 """
@@ -58,15 +58,31 @@ print(scores)
 
 
 #Test EvalIRModel
-queryParser=QueryParser()
-queryCollection=queryParser.buildCollectionQuery("data\cisi\cisi.qry","data\cisi\cisi.rel")
+
 #print(type(queryCollection))
 evalIRModel=EvalIRModel(indexSimpler,weighter,lambda_=0.8,K1=1.2,B=0.75)
-evalIRModel.evalModel(queryCollection)
+#evalIRModel.evalModel(queryCollection)
+#vectoriel=Vectoriel(indexSimpler,weighter,True)
+#okapi=Okapi(indexSimpler,K1=1.2,B=0.75)
+#print(evalIRModel.differenceSignificativeRIModel(vectoriel, okapi, queryCollection[1]))
+
+#Test OptimIRModel
+optimIRModel=OptimIRModel()
+
+trainQ, testQ=optimIRModel.splitTrainTest(queryCollection)
+params_optim=optimIRModel.gridSearch_Okapi(trainQ, queryCollection, indexSimpler)
+print("\n Modele Okapi-BM25 valeur optimale de (K1,B) =",params_optim)
+
+score=optimIRModel.crossValidation(Okapi(indexSimpler,K1=params_optim[0],B=params_optim[1]),MAP(),queryCollection,3)
+print(score)
 
 
 
-
+"""
+map_=MAP()
+okapi=Okapi(indexSimpler,K1=0.6,B=0.7)
+print(map_.evalQueries([list(okapi.getRanking(queryCollection[q].getText()).keys()) for q in queryCollection.keys()] ,queryCollection))
+"""
 
 
 """
