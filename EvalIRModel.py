@@ -158,6 +158,17 @@ class OptimIRModel():
     
     
     def splitTrainTest(self, queries):
+        """
+        Parameters
+        ----------
+        queries : dictionnaire de Query
+
+        Returns
+        -------
+        trainQ : liste id des Query en train
+        testQ : liste id des Query en test
+
+        """
         list_keys=list(queries.keys())
         n=len(list_keys)
         trainQ=list_keys[:int(0.8*n)]
