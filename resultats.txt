@@ -1,0 +1,27 @@
+#-----------------------------------------------------------------------
+Répartition du travail :
+On a tout fait ensemble.
+
+#-----------------------------------------------------------------------
+Bonus faits:
+2.4:Séparation des données en train/test et utilisation des grid search
+2.5:Cross-validation
+2.6: Significativité entre 2 modèles
+2.7: Suite optimisation des modèles RI
+2.6: trouver la valeur optimale du dumping factor d avec 
+un grid search ensuite utiliser une cross-validation
+
+#------------------------------------------------------------------------
+Modèle Okapi-BM25:
+Grid search:
+Paramètres optimaux : K1=1.8 ,  B=1
+
+Score Map pour ces valeurs optimales : 0.0221
+Score Avec une cross-val = 0.008811
+
+Modèle de langue (lissage Jelinek-Mercer):
+Grid search:
+Paramètre optimal : lambda=0
+
+Score Map pour ces valeurs optimales : 0.0164659940910034
+Score Avec une cross-val : 0.01972706892220789

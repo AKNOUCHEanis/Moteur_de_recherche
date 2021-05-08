@@ -145,12 +145,3 @@ print(indexSimpler.getHyperLinksTo(1))
 
 
 
-
-
-
-
-
-
-
-
-
