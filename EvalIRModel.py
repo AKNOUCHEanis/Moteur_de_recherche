@@ -230,7 +230,7 @@ class OptimIRModel():
         scores=[]
         params=[]
         j=0 
-        for lambda_ in [i/10 for i in range(10) ]:
+        for lambda_ in [i/10 for i in range(15) ]:
             
             modeleLangue=ModeleLangue(index,lambda_)
             for q in trainQ:

@@ -42,6 +42,7 @@ optimIRModel=OptimIRModel()
 
 trainQ, testQ=optimIRModel.splitTrainTest(queryCollection)
 
+"""
 #Grid search pour Okapi--------------------------**********************
 params_optim=optimIRModel.gridSearch_Okapi(trainQ, queryCollection, indexSimpler)
 print("\n Modele Okapi-BM25 valeur optimale de (K1,B) =",params_optim)
@@ -66,7 +67,7 @@ score=optimIRModel.crossValidation(Okapi(indexSimpler,K1=params_optim[0],B=param
 print("Score Avec une cross-val :",score)
 fichier.write("Score Avec une cross-val : "+str(score)+" \n")
 
-
+"""
 #Grid search pour Le modele de langue
 params_optim=optimIRModel.gridSearch_ModeleLangue(trainQ, queryCollection, indexSimpler)
 print("\n Modele de Langue valeur optimal de lambda =",params_optim)
