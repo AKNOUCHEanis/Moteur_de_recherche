@@ -4,7 +4,7 @@ Création d'un moteur de recherche sur des documents de type texte. (Recherche d
 
 -Parsing, Indexation, tf-idf ...
 
--Représentation pondérée des documents et de la requete (Weighters)
+-Représentation pondérée des documents et de la requête (Weighters)
 
 -Modèles de RI: 
 
