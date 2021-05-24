@@ -20,5 +20,5 @@ Création d'un moteur de recherche sur des documents de type texte. (Recherche d
 
 -Optimisation des paramètres d'apprentissage des modèles ML
 
--Page Rank (Scoring et classification des documents selon leurs popularité à l'aide des hyperliens)
+-Page Rank (Scoring et classification des documents selon leur popularité à l'aide des hyperliens)
 
